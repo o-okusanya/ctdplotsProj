@@ -1,0 +1,6 @@
+pytz
+numpy
+requests
+python-dateutil
+matplotlib
+adjustText

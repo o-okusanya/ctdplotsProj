@@ -1,0 +1,23 @@
+# Do not store any configuration files
+/cfg/*
+
+# Custom CBIBS ignores
+*.~lock.*
+temp.py
+data_output/*
+data_input/*
+
+# pycharm
+.idea/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Don't save any logs
+logs/
+
+# Exclude any local environments
+venv/
+.venv/
