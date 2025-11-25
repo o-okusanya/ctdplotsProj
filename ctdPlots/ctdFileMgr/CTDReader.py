@@ -75,7 +75,7 @@ def getDate(fileName, input, startYear):
     else:
     '''
     # Anything after this date 6/3/2022 is in EST
-    if startYear == '2024':
+    if startYear == '2024' or startYear == '2025':
         appTz = pytz.timezone('UTC')
     else:
         appTz = pytz.timezone('America/New_York')
@@ -111,33 +111,68 @@ def getErddapName(file):
     return None
 
 
+# def getNcboName(file):
+#     path = os.path.normpath(file)
+#     dirs = path.split(os.sep)
+#     noaaId = dirs[len(dirs) - 2]
+#     if noaaId == 'dataFiles':
+#         # This is the generic section, read the file name
+#         # CHOMA_01_Post_2023_06_27_0025
+#         filename = os.path.basename(file)
+#         if filename.startswith('CHOMA'):
+#             return 'lower-choptank'
+#         elif filename.startswith('CB5MH'):
+#             return 'mid-bay'
+#         elif filename.startswith('POTMH_01'):
+#             return 'lower-potomac'
+#         elif filename.startswith('POTMH_02'):
+#             return 'herring-creek'
+#         elif filename.startswith('POTMH_03'):
+#             return 'clements-island'
+#         elif filename.startswith('CB4MH_01'):
+#             return 'sharps-island'
+#         elif filename.startswith('CHOMH2_01'):
+#             return 'chlora-point'
+#         elif filename.startswith('CHOMH1_01'):
+#             return 'lower-choptank'
+#         return 'unknown'
+#     return noaaId
+
 def getNcboName(file):
     path = os.path.normpath(file)
     dirs = path.split(os.sep)
     noaaId = dirs[len(dirs) - 2]
     if noaaId == 'dataFiles':
         # This is the generic section, read the file name
-        # CHOMA_01_Post_2023_06_27_0025
+        pattern_lower_choptank = re.compile(r'CHOMH1[\W_]*|Lower[\W_]*Choptank', re.IGNORECASE)
+        pattern_mid_bay = re.compile(r'CB5MH[\W_]*|Mid[\W_]*Bay', re.IGNORECASE)
+        pattern_lower_potomac = re.compile(r'POTMH_01[\W_]*|Lower[\W_]*Potomac', re.IGNORECASE)
+        pattern_herring_creek = re.compile(r'POTMH_02[\W_]*|Herring[\W_]*Creek', re.IGNORECASE)
+        pattern_clements_island = re.compile(r'POTMH_03[\W_]*|Clements[\W_]*Island', re.IGNORECASE)
+        pattern_sharps_island = re.compile(r'CB4MH_01[\W_]*|Sharps[\W_]*Island', re.IGNORECASE)
+        pattern_chlora_point = re.compile(r'CHOMH2_01[\W_]*|Chlora[\W_]*Point', re.IGNORECASE)
+        pattern_vims_test = re.compile(r'VIMS_YRKPH[\W_]*|Vims[\W_]*Test', re.IGNORECASE)
+
         filename = os.path.basename(file)
-        if filename.startswith('CHOMA'):
+        if pattern_lower_choptank.search(filename):
             return 'lower-choptank'
-        elif filename.startswith('CB5MH'):
+        elif pattern_mid_bay.search(filename):
             return 'mid-bay'
-        elif filename.startswith('POTMH_01'):
+        elif pattern_lower_potomac.search(filename):
             return 'lower-potomac'
-        elif filename.startswith('POTMH_02'):
+        elif pattern_herring_creek.search(filename):
             return 'herring-creek'
-        elif filename.startswith('POTMH_03'):
+        elif pattern_clements_island.search(filename):
             return 'clements-island'
-        elif filename.startswith('CB4MH_01'):
+        elif pattern_sharps_island.search(filename):
             return 'sharps-island'
-        elif filename.startswith('CHOMH2_01'):
+        elif pattern_chlora_point.search(filename):
             return 'chlora-point'
-        elif filename.startswith('CHOMH1_01'):
-            return 'lower-choptank'
+        elif pattern_vims_test.search(filename):
+            return 'vims-test01'
+
         return 'unknown'
     return noaaId
-
 
 def getFileTiming(file):
     filename = os.path.basename(file)
@@ -172,6 +207,7 @@ def getYearFromFilename(file):
         return x
 
     return None
+
 
 
 def processFile(file):

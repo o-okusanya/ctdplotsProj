@@ -8,7 +8,7 @@ import pytz
 class HypoxiaUtil:
 
     @staticmethod
-    def getRootDir(projName="CTDPlots"):
+    def getRootDir(projName="ctdplotsProj"):
         """
         Finds the root of the project and return it as string.
         The root is the directory named

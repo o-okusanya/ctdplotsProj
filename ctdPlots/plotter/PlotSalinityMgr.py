@@ -5,8 +5,8 @@ from ctdPlots.plotter.PlotBaseMgr import PlotBaseMgr
 
 class PlotSalinityMgr(PlotBaseMgr):
 
-    def __init__(self,firstDate):
-        PlotBaseMgr.__init__(self,firstDate)
+    def __init__(self, firstDate):
+        PlotBaseMgr.__init__(self, firstDate)
         self.units = " (PPT)"
         self.limits = [0, 30]
         self.tableDesc = "Difference (±5.0 %)"
@@ -42,8 +42,7 @@ class PlotSalinityMgr(PlotBaseMgr):
                                                                       self.DATA_INDEX)
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
-                                                ctdFilteredDepths, ctdFilteredData,
-                                                self._percentDifference)  # DIFFERENT
+                                                ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFE
             colors = self._colorTable(axis, tableList, self.min, self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,

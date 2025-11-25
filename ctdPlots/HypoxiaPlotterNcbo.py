@@ -458,7 +458,7 @@ def saveTheFig(ncboName, name, subName, dtStr):
     dt = parse(dtStr)
     # dt = datetime.strptime(dtStr, "%Y-%m-%dT%H:%M:%SZ")
     rootDir = HypoxiaUtil.getRootDir()
-    plotDir = os.path.join(rootDir, 'plots')
+    plotDir = os.path.join(rootDir, 'data_output/plots')
     if not os.path.exists(plotDir):
         os.mkdir(plotDir)
     aname = f"{ncboName}_{dt.strftime('%Y_%m_%d')}_{name}_{subName}.png"

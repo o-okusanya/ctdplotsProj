@@ -41,6 +41,7 @@ class PlotBaseMgr:
     def _valueDifference(self, array, ctd):
         return array - ctd
 
+    ''' There is a file change made after this date that moves the depth index '''
     def _getDepthIndex(self, firstDate):
         # Anything before this date has a different depth index
         depthSwapDate = datetime(2023, 5, 23, 0, 0, 0)
@@ -55,6 +56,7 @@ class PlotBaseMgr:
         # Remove the depths and leave the other values
         plotTbl = np.delete(tableValues, np.s_[0:1], axis=1)
         tblArr = list(plotTbl)
+        # TODO testing
         ''' Formatting the table
             So you can put the table a bit lower (-0.3), and setting the height to 0.275 (<0.3) will create an 
             horizontal space between the plot and the table while making taller cells as the default value of 
@@ -211,7 +213,7 @@ class PlotBaseMgr:
         # dt = datetime.strftime(dtStr, "%Y-%m-%dT%H:%M:%SZ")
         dt = dtStr.strftime('%Y_%m_%d')
         rootDir = HypoxiaUtil.getRootDir()
-        plotDir = os.path.join(rootDir, 'plots')
+        plotDir = os.path.join(rootDir, 'data_output/plots')
         if not os.path.exists(plotDir):
             os.mkdir(plotDir)
         aname = f"{ncboName}_{dt}_{name}_{fileTime}_{subName}.svg"

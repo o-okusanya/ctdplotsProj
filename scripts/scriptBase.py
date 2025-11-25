@@ -3,7 +3,7 @@ import os, sys
 
 from ctdPlots.HypoxiaUtil import HypoxiaUtil
 
-projName = 'CTDPlots'
+projName = 'ctdplotsProj'
 '''
     # # The demo test code
     # mylogs.debug("The debug")

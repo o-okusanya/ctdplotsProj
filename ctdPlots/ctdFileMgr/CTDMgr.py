@@ -75,6 +75,18 @@ class CTDMgr:
             return -1
         elif re.search('CHOMA_01_Pre_2023_12_22_0092.cnv', filename) is not None:
             return -1
+        # 2025 adjustments
+        elif re.search('Lower_Choptank_Pre_2025_20_22_0003.cnv', filename) is not None:
+            return 7
+        elif re.search('Chlora_Point_Pre_2025_20_22_0004.cnv', filename) is not None:
+            return 7
+        elif re.search('Chlora_Point_Post_2025_20_22_0005.cnv', filename) is not None:
+            return 7
+        elif re.search('VIMS_YRKPH_Post_2025_09_10_0010.cnv', filename) is not None:
+            return 6
+        elif re.search('VIMS_YRKPH_Pre_2025_09_10_0009.cnv', filename) is not None:
+            return 6
+
         # elif re.search('PTOMH_01_Post_2023_05_25_0011.cnv', filename) is not None:
         #     return -1
         return 0

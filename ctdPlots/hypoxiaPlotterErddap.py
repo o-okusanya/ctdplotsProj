@@ -382,7 +382,7 @@ def getThePlotData(ctdData, erdapDepth, ctdIndex):
 
 def saveTheFig(erddapName, name, dtStr):
     dt = datetime.strptime(dtStr, "%Y-%m-%dT%H:%M:%SZ")
-    plotDir = 'plots'
+    plotDir = 'data_output/plots'
     if not os.path.exists(plotDir):
         os.mkdir(plotDir)
     fname = os.path.join(plotDir, erddapName + "_" + name + "_" + dt.strftime("%Y_%m_%d") + ".png")

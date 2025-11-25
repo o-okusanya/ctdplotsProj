@@ -19,7 +19,7 @@ from hypbase.src.vo.HypoxiaParameter import HypoxiaParameter
 class HypoxiaPlotDualMgr:
 
     def __init__(self):
-        self.hypApi = HypoxiaApi(HypoxiaUtil.getRootDir("CTDPlots"))
+        self.hypApi = HypoxiaApi(HypoxiaUtil.getRootDir())
 
     def getApiData(self, ncboName, firstDate, beginOffset, endOffset, traverse_order, position):
         beginDateTs = pytz.UTC.localize(datetime.utcfromtimestamp(firstDate + beginOffset))
@@ -54,7 +54,7 @@ class HypoxiaPlotDualMgr:
 
     def runDualCTDPlot(self):
         # Get all the casts
-        ctdFiles = self.getFiles("CTD_Data/dataFiles")
+        ctdFiles = self.getFiles("data_input/CTD_Data/dataFiles")
         # To run one cast use this
         # ctdFiles = [r"CTD_Data\\2022-06-29 East Maintenance\\CTD Casts\\Processed CTDs\\HYP_E_01906398_2022_06_29_0003.cnv"]
         # r"CTD_Data\\2022-07-15 East Deployment\\CTD Casts\\Processed Data\\HYP_W_01906398_2022_07_15_0008.cnv"]
@@ -87,10 +87,10 @@ class HypoxiaPlotDualMgr:
                 pltC = PlotConductivityMgr(firstDate)
                 pltC.plotDualConductivity(ctdData, dataCondPre, dataCondPost, ncboName, subName, fileTime)
 
-                dataSalPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.SEA_WATER_SALINITY)
-                dataSalPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.SEA_WATER_SALINITY)
-                pltS = PlotSalinityMgr(firstDate)
-                pltS.plotDualSalinity(ctdData, dataSalPre, dataSalPost, ncboName, subName, fileTime)
+                # dataSalPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.SEA_WATER_SALINITY)
+                # dataSalPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.SEA_WATER_SALINITY)
+                # pltS = PlotSalinityMgr(firstDate)
+                # pltS.plotDualSalinity(ctdData, dataSalPre, dataSalPost, ncboName, subName, fileTime)
 
                 dataDoPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)
                 dataDoPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)

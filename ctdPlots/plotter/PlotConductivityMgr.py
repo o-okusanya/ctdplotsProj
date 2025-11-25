@@ -1,12 +1,6 @@
 import logging
 
-import numpy as np
-
-from ctdPlots.HypoxiaUtil import HypoxiaUtil
 from ctdPlots.plotter.PlotBaseMgr import PlotBaseMgr
-
-
-# import matplotlib.pyplot as plt
 
 
 class PlotConductivityMgr(PlotBaseMgr):
@@ -45,14 +39,13 @@ class PlotConductivityMgr(PlotBaseMgr):
         # Get the temperature data from the CTD File
         if apiDataVo is None:
             # Only plot the CTD data
-            ctdFilteredData, ctdFilteredDepths = self._getThePlotData(ctdData, None,
-                                                                      self.DATA_INDEX)
+            ctdFilteredData, ctdFilteredDepths = self._getThePlotData(ctdData, None, self.DATA_INDEX)
         else:
             # Just plot the CTD data, no API data or table can be generated
             ctdFilteredData, ctdFilteredDepths = self._getThePlotData(ctdData, apiDataVo.getUniqueDepths(),
                                                                       self.DATA_INDEX)
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
-                                                ctdFilteredDepths, ctdFilteredData, self._valueDifference)  # DIFFERENT
+                                                ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFERENT
             colors = self._colorTable(axis, tableList, self.min, self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
 
