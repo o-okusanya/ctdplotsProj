@@ -75,7 +75,7 @@ def getDate(fileName, input, startYear):
     else:
     '''
     # Anything after this date 6/3/2022 is in EST
-    if startYear == '2024' or startYear == '2025':
+    if int(startYear) >= 2024:   #== '2024' or startYear == '2025' or startYear == '2026':
         appTz = pytz.timezone('UTC')
     else:
         appTz = pytz.timezone('America/New_York')
