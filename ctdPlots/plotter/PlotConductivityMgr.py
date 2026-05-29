@@ -10,7 +10,7 @@ class PlotConductivityMgr(PlotBaseMgr):
         self.suspect = 0.3
         self.units = " (mS.cm-1)"
         self.limits = [0, 50]
-        self.tableDesc = "Difference (±5.0 %)"
+        self.tableDesc = "Difference (±0.5°C fail / ±0.3°C suspect)"
         self.DATA_INDEX = 2
         self.name = "Water Conductivity"
         self.min = -5.0

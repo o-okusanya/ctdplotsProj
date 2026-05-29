@@ -10,7 +10,7 @@ class PlotDissolvedO2Mgr(PlotBaseMgr):
         self.suspect = 0.3
         self.units = " (mg.L-1)"
         self.limits = [0, 15]
-        self.tableDesc = "Difference (±0.5) mg.L-1"
+        self.tableDesc = "Difference (±0.5°C fail / ±0.3°C suspect) mg.L-1"
         self.DATA_INDEX = 4
         self.name = "Dissolved Oxygen"
         self.min = -0.5

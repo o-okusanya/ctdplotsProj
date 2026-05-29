@@ -9,7 +9,7 @@ class PlotSalinityMgr(PlotBaseMgr):
         PlotBaseMgr.__init__(self, firstDate)
         self.units = " (PPT)"
         self.limits = [0, 30]
-        self.tableDesc = "Difference (±5.0 %)"
+        self.tableDesc = "Difference (±0.5°C fail / ±0.3°C suspect)"
         self.DATA_INDEX = 3
         self.name = "Water Salinity"
         self.min = -5.0

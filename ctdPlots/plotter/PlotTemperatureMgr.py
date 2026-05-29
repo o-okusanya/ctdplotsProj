@@ -9,7 +9,7 @@ class PlotTemperatureMgr(PlotBaseMgr):
         PlotBaseMgr.__init__(self,firstDate)
         self.units = " (°C)"
         self.limits = [0, 30]
-        self.tableDesc = "Difference (±0.2 °C)"
+        self.tableDesc = "Difference (±0.2°C fail / ±0.1°C suspect)"
         self.DATA_INDEX = 1
         self.name = "Water Temperature"
         self.min = -0.2
