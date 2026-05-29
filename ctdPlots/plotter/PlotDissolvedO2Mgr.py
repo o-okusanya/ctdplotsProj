@@ -7,6 +7,7 @@ class PlotDissolvedO2Mgr(PlotBaseMgr):
 
     def __init__(self, firstDate):
         PlotBaseMgr.__init__(self, firstDate)
+        self.suspect = 0.3
         self.units = " (mg.L-1)"
         self.limits = [0, 15]
         self.tableDesc = "Difference (±0.5) mg.L-1"
@@ -46,7 +47,7 @@ class PlotDissolvedO2Mgr(PlotBaseMgr):
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._valueDifference)  # DIFFERENT
-            colors = self._colorTable(axis, tableList, self.min, self.max)
+            colors = self._colorTable(axis, tableList, self.min,self.suspect,self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName,
                        self.units,

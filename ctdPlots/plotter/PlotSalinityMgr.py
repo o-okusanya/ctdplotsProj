@@ -13,6 +13,7 @@ class PlotSalinityMgr(PlotBaseMgr):
         self.DATA_INDEX = 3
         self.name = "Water Salinity"
         self.min = -5.0
+        self.suspect = 0.3
         self.max = 5.0
 
     def plotDualSalinity(self, ctdData, dataTemperaturePre, dataTemperaturePost, ncboName, subName, fileTime):
@@ -43,7 +44,7 @@ class PlotSalinityMgr(PlotBaseMgr):
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFE
-            colors = self._colorTable(axis, tableList, self.min, self.max)
+            colors = self._colorTable(axis, tableList, self.min, self.suspect, self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,
                        self.limits, rptName, fileTime)

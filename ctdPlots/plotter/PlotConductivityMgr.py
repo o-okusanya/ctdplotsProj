@@ -7,6 +7,7 @@ class PlotConductivityMgr(PlotBaseMgr):
 
     def __init__(self, firstDate):
         PlotBaseMgr.__init__(self, firstDate)
+        self.suspect = 0.3
         self.units = " (mS.cm-1)"
         self.limits = [0, 50]
         self.tableDesc = "Difference (±5.0 %)"
@@ -46,7 +47,7 @@ class PlotConductivityMgr(PlotBaseMgr):
                                                                       self.DATA_INDEX)
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFERENT
-            colors = self._colorTable(axis, tableList, self.min, self.max)
+            colors = self._colorTable(axis, tableList, self.min, self.suspect, self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
 
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,

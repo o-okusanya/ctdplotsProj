@@ -13,6 +13,7 @@ class PlotTemperatureMgr(PlotBaseMgr):
         self.DATA_INDEX = 1
         self.name = "Water Temperature"
         self.min = -0.2
+        self.suspect = 0.1
         self.max = 0.2
 
     def plotDualTemp(self, ctdData, dataTemperaturePre, dataTemperaturePost, ncboName, subName, fileTime):
@@ -42,7 +43,7 @@ class PlotTemperatureMgr(PlotBaseMgr):
             ctdFilteredData, ctdFilteredDepths = self._getThePlotData(ctdData, apiDataVo.getUniqueDepths(), self.DATA_INDEX)
             tableList = self._getDataDepthLists(apiDataVo.getUniqueDepths(), apiDataVo.dataArray, apiDataVo.pressArray,
                                             ctdFilteredDepths, ctdFilteredData, self._valueDifference)  # DIFFERENT
-            colors = self._colorTable(axis, tableList, self.min, self.max)
+            colors = self._colorTable(axis, tableList, self.min, self.suspect , self.max)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
 
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,

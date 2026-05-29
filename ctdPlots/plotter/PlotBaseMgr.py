@@ -74,7 +74,7 @@ class PlotBaseMgr:
             cell.set_height(cell.get_height() * 1.5)
         tbl.auto_set_font_size(True)
 
-    def _colorTable(self, axis, tableList, maxDiffLow, maxDiffHigh):
+    def _colorTable(self, axis, tableList, maxDiffLow, suspect ,maxDiffHigh):
         # for loop to assign colors to differences in numbers
         colors = []
         for i in range(len(tableList)):
@@ -83,11 +83,15 @@ class PlotBaseMgr:
             #    colors.append(["white", "white", "white"])
             # Added pressure, the diff is now col 4
             if tableList[i][4] is not None and (tableList[i][4] < maxDiffLow or tableList[i][4] > maxDiffHigh):
-                # 5% difference
+                #outside suspect range failed
                 colors.append(["white", "white", "white", "red"])
                 axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
+            elif tableList[i][4] is not None and (tableList[i][4] < -suspect or tableList[i][4] > suspect):
+                #inside suspect range
+                colors.append(["white", "white", "white", "orange"])
+                axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
             else:
-                # Either none or within the range
+                #Either none or the ranges
                 colors.append(["white", "white", "white", "white"])
                 axis.axhline(tableList[i][0], color='black', lw=0.25)  # y = 0
         return colors
