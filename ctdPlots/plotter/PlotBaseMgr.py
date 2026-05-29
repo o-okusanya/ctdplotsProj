@@ -2,6 +2,7 @@ import logging
 import os
 import time
 from datetime import datetime, timezone
+from sys import flags
 
 import pytz
 from dateutil.parser import parse
@@ -15,6 +16,7 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.transforms import Bbox
 
 from ctdPlots.HypoxiaUtil import HypoxiaUtil
+from ctdPlots.plotter.QCEvaluator import QCEvaluator
 
 
 class PlotBaseMgr:
@@ -74,7 +76,7 @@ class PlotBaseMgr:
             cell.set_height(cell.get_height() * 1.5)
         tbl.auto_set_font_size(True)
 
-    def _colorTable(self, axis, tableList, maxDiffLow, suspect ,maxDiffHigh):
+    def _colorTable(self, axis, tableList, flags):
         # for loop to assign colors to differences in numbers
         colors = []
         for i in range(len(tableList)):
@@ -82,11 +84,11 @@ class PlotBaseMgr:
             # if tableList[i][1] is None or tableList[i][2] is None:
             #    colors.append(["white", "white", "white"])
             # Added pressure, the diff is now col 4
-            if tableList[i][4] is not None and (tableList[i][4] < maxDiffLow or tableList[i][4] > maxDiffHigh):
+            if flags[i] == 4:
                 #outside suspect range failed
                 colors.append(["white", "white", "white", "red"])
                 axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
-            elif tableList[i][4] is not None and (tableList[i][4] < -suspect or tableList[i][4] > suspect):
+            elif flags[i] == 3:
                 #inside suspect range
                 colors.append(["white", "white", "white", "orange"])
                 axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0

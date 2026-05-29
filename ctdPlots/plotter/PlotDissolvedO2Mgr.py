@@ -1,6 +1,7 @@
 import logging
 
 from ctdPlots.plotter.PlotBaseMgr import PlotBaseMgr
+from ctdPlots.plotter.QCEvaluator import QCEvaluator
 
 
 class PlotDissolvedO2Mgr(PlotBaseMgr):
@@ -15,6 +16,7 @@ class PlotDissolvedO2Mgr(PlotBaseMgr):
         self.name = "Dissolved Oxygen"
         self.min = -0.5
         self.max = 0.5
+        self.qc = QCEvaluator(failLow=self.min, failHigh=self.max, suspectLow=-self.suspect, suspectHigh=self.suspect)
 
     def plotDissolvedO2(self, ctdData, dataTemperaturePre, dataTemperaturePost, ncboName, subName, fileTime):
         self._plotDissolvedO2Sub(self.ax1, self.name, ctdData, dataTemperaturePre, ncboName, self.PRE_LABEL,
@@ -47,7 +49,8 @@ class PlotDissolvedO2Mgr(PlotBaseMgr):
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._valueDifference)  # DIFFERENT
-            colors = self._colorTable(axis, tableList, self.min,self.suspect,self.max)
+            flags = self.qc.evaluateList(tableList)
+            colors = self._colorTable(axis, tableList, flags)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName,
                        self.units,

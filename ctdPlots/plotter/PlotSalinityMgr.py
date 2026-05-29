@@ -1,6 +1,7 @@
 import logging
 
 from ctdPlots.plotter.PlotBaseMgr import PlotBaseMgr
+from ctdPlots.plotter.QCEvaluator import QCEvaluator
 
 
 class PlotSalinityMgr(PlotBaseMgr):
@@ -15,6 +16,7 @@ class PlotSalinityMgr(PlotBaseMgr):
         self.min = -5.0
         self.suspect = 0.3
         self.max = 5.0
+        self.qc = QCEvaluator(failLow=self.min, failHigh=self.max, suspectLow=-self.suspect, suspectHigh=self.suspect)
 
     def plotDualSalinity(self, ctdData, dataTemperaturePre, dataTemperaturePost, ncboName, subName, fileTime):
         self._plotDualSalSub(self.ax1, self.name, ctdData, dataTemperaturePre, ncboName, self.PRE_LABEL, fileTime)
@@ -44,7 +46,8 @@ class PlotSalinityMgr(PlotBaseMgr):
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFE
-            colors = self._colorTable(axis, tableList, self.min, self.suspect, self.max)
+            flags = self.qc.evaluateList(tableList)
+            colors = self._colorTable(axis, tableList, flags)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,
                        self.limits, rptName, fileTime)

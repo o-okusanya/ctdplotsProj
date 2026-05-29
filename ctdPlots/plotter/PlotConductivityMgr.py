@@ -1,6 +1,7 @@
 import logging
 
 from ctdPlots.plotter.PlotBaseMgr import PlotBaseMgr
+from ctdPlots.plotter.QCEvaluator import QCEvaluator
 
 
 class PlotConductivityMgr(PlotBaseMgr):
@@ -15,6 +16,7 @@ class PlotConductivityMgr(PlotBaseMgr):
         self.name = "Water Conductivity"
         self.min = -5.0
         self.max = 5.0
+        self.qc = QCEvaluator(failLow=self.min, failHigh=self.max, suspectLow=-self.suspect, suspectHigh=self.suspect)
 
     def plotDualConductivity(self, ctdData, dataTemperaturePre, dataTemperaturePost, ncboName, subName, fileTime):
 
@@ -47,7 +49,8 @@ class PlotConductivityMgr(PlotBaseMgr):
                                                                       self.DATA_INDEX)
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFERENT
-            colors = self._colorTable(axis, tableList, self.min, self.suspect, self.max)
+            flags = self.qc.evaluateList(tableList)
+            colors = self._colorTable(axis, tableList, flags)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
 
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,
