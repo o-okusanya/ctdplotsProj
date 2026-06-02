@@ -1,3 +1,6 @@
+from matplotlib import axis
+
+
 class QCEvaluator:
     def __init__(self, failLow, failHigh, suspectLow, suspectHigh):
         self.failLow = failLow
@@ -19,9 +22,23 @@ class QCEvaluator:
         else:
             return self.GOOD
 
-    def evaluateList(self, tableList):
+    def evaluateList(self, axis, tableList):
         flags = []
+        colors = []
         for row in tableList:
-            difference = row[4]  # col 4 is the difference
+            difference = row[4]  #4th column is the difference
             flags.append(self.evaluateDifference(difference))
-        return flags
+        for i in range(len(tableList)):
+            if flags[i] == 4:
+                # outside suspect range failed
+                colors.append(["white", "white", "white", "red"])
+                axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
+            elif flags[i] == 3:
+                # inside suspect range
+                colors.append(["white", "white", "white", "orange"])
+                axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
+            else:
+                # Either none or the ranges
+                colors.append(["white", "white", "white", "white"])
+                axis.axhline(tableList[i][0], color='black', lw=0.25)  # y = 0
+        return colors

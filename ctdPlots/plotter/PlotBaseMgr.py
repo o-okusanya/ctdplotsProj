@@ -16,7 +16,6 @@ from matplotlib.font_manager import FontProperties
 from matplotlib.transforms import Bbox
 
 from ctdPlots.HypoxiaUtil import HypoxiaUtil
-from ctdPlots.plotter.QCEvaluator import QCEvaluator
 
 
 class PlotBaseMgr:
@@ -29,7 +28,6 @@ class PlotBaseMgr:
         # Create the figure when initing
         self.fig, (self.ax1, self.ax2) = plt.subplots(1, 2)
         self.fig.set_size_inches(18, 7)
-
         # Used for color coding the table
 
     def _percentDifference(self, current, previous):
@@ -76,27 +74,6 @@ class PlotBaseMgr:
             cell.set_height(cell.get_height() * 1.5)
         tbl.auto_set_font_size(True)
 
-    def _colorTable(self, axis, tableList, flags):
-        # for loop to assign colors to differences in numbers
-        colors = []
-        for i in range(len(tableList)):
-            # Either one is none, then no calc
-            # if tableList[i][1] is None or tableList[i][2] is None:
-            #    colors.append(["white", "white", "white"])
-            # Added pressure, the diff is now col 4
-            if flags[i] == 4:
-                #outside suspect range failed
-                colors.append(["white", "white", "white", "red"])
-                axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
-            elif flags[i] == 3:
-                #inside suspect range
-                colors.append(["white", "white", "white", "orange"])
-                axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
-            else:
-                #Either none or the ranges
-                colors.append(["white", "white", "white", "white"])
-                axis.axhline(tableList[i][0], color='black', lw=0.25)  # y = 0
-        return colors
 
     def _getDataDepthLists(self, hypDepth, hypData, pressData, ctdFilteredDepths, ctdFilteredData, diffFn):
         # depthHash={}

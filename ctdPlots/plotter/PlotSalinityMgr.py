@@ -46,8 +46,7 @@ class PlotSalinityMgr(PlotBaseMgr):
 
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
                                                 ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFE
-            flags = self.qc.evaluateList(tableList)
-            colors = self._colorTable(axis, tableList, flags)
+            colors = self.qc.evaluateList(axis, tableList)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
         self._makePlot(axis, ctdFilteredData, ctdFilteredDepths, name, ctdData[0][0], apiDataVo, ncboName, self.units,
                        self.limits, rptName, fileTime)
