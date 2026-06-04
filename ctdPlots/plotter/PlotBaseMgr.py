@@ -66,7 +66,7 @@ class PlotBaseMgr:
                          rowLabels=depthValues,
                          colLabels=["Station data", "Pressure", "CTD data", difference],
                          loc='bottom',
-                         bbox=[0.0, -1.3, 1.0, 1.0],
+                         bbox=[0.0, -1.5, 1.0, 1.2],
                          cellColours=colors)
         for (row, col), cell in tbl.get_celld().items():
             if row == 0:

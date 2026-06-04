@@ -1,6 +1,3 @@
-from matplotlib import axis
-
-
 class QCEvaluator:
     def __init__(self, failLow, failHigh, suspectLow, suspectHigh):
         self.failLow = failLow
