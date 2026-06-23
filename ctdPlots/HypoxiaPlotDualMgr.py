@@ -92,8 +92,11 @@ class HypoxiaPlotDualMgr:
                 # pltS = PlotSalinityMgr(firstDate)
                 # pltS.plotDualSalinity(ctdData, dataSalPre, dataSalPost, ncboName, subName, fileTime)
 
-                dataDoPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)
-                dataDoPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)
+                # dataDoPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)
+                # dataDoPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.DISSOLVED_OXYGEN_ADJ)
+                # Changed this to use NON_Adjusted DO
+                dataDoPre = self.getDataFromApiSet(hypStaBefore, HypoxiaParameter.DISSOLVED_OXYGEN)
+                dataDoPost = self.getDataFromApiSet(hypStaAfter, HypoxiaParameter.DISSOLVED_OXYGEN)
                 pltO = PlotDissolvedO2Mgr(firstDate)
                 pltO.plotDissolvedO2(ctdData, dataDoPre, dataDoPost, ncboName, subName, fileTime)
 

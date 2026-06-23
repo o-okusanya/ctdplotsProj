@@ -104,6 +104,23 @@ class PlotBaseMgr:
         return round(diffFn(hypData, ctdvalue), 3)
 
     def _getCTDDepthandValue(self, hypDepth, ctdDepths, ctdValues):
+        # First look for a depth within .025 m of the configured station depth
+        # If not found expand the range and search again
+        for i, ctdDepth in enumerate(ctdDepths):
+            if abs(ctdDepth - hypDepth) < 0.025:
+                # Just passed the depth, is it close
+                return round(ctdValues[i], 2)
+
+        for i, ctdDepth in enumerate(ctdDepths):
+            if abs(ctdDepth - hypDepth) < 0.05:
+                # Just passed the depth, is it close
+                return round(ctdValues[i], 2)
+
+        for i, ctdDepth in enumerate(ctdDepths):
+            if abs(ctdDepth - hypDepth) < 0.075:
+                # Just passed the depth, is it close
+                return round(ctdValues[i], 2)
+
         for i, ctdDepth in enumerate(ctdDepths):
             if abs(ctdDepth - hypDepth) < 0.1:
                 # Just passed the depth, is it close
@@ -118,6 +135,7 @@ class PlotBaseMgr:
             if abs(ctdDepth - hypDepth) < 0.75:
                 # Just passed the depth, is it close
                 return round(ctdValues[i], 2)
+        return None
 
     # Key to sort by depth
     def _by_depth(self, ele):

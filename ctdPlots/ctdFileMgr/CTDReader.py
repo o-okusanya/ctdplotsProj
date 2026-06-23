@@ -153,6 +153,10 @@ def getNcboName(file):
         pattern_chlora_point = re.compile(r'CHOMH2_01[\W_]*|Chlora[\W_]*Point', re.IGNORECASE)
         pattern_vims_test = re.compile(r'VIMS_YRKPH[\W_]*|Vims[\W_]*Test', re.IGNORECASE)
 
+        pattern_piankatank = re.compile(r'PIAMH_01[\W_]*|Middle[\W_]*Piankatank', re.IGNORECASE)
+        pattern_rhode_river = re.compile(r'RHDMH_02[\W_]*|Rhode[\W_]*River[\W_]2', re.IGNORECASE)
+        pattern_serc_buoy = re.compile(r'RHDMH_01[\W_]*|Serc[\W_]*Buoy', re.IGNORECASE)
+
         filename = os.path.basename(file)
         if pattern_lower_choptank.search(filename):
             return 'lower-choptank'
@@ -170,7 +174,12 @@ def getNcboName(file):
             return 'chlora-point'
         elif pattern_vims_test.search(filename):
             return 'vims-test01'
-
+        elif pattern_piankatank.search(filename):
+            return 'middle-piankatank'
+        elif pattern_rhode_river.search(filename):
+            return 'rhode-river-2'
+        elif pattern_serc_buoy.search(filename):
+            return 'serc-buoy'
         return 'unknown'
     return noaaId
 
