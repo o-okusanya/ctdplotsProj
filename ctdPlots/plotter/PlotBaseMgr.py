@@ -1,5 +1,8 @@
 import logging
 import os
+
+import logging
+logger = logging.getLogger(__name__)
 import time
 from datetime import datetime, timezone
 from sys import flags
@@ -51,6 +54,10 @@ class PlotBaseMgr:
 
     def _buildDualTable(self, axis, tableValues, colors, difference):
         # Get the depths into an array
+        if not tableValues:
+            logging.warning("_buildDualTable received empty tableValues — skipping table")
+            return
+
         dv = np.array(tableValues)
         depthValues = dv[:, 0]
         # Remove the depths and leave the other values
@@ -64,13 +71,13 @@ class PlotBaseMgr:
         # bbox is: [left, bottom, width, height]'''
         tbl = axis.table(cellText=tblArr,
                          rowLabels=depthValues,
-                         colLabels=["Station data", "Pressure", "CTD data", difference],
+                         colLabels=["Station data", "Pressure", "Actual Depth", "CTD Data at Actual", "CTD Data", difference],
                          loc='bottom',
                          bbox=[0.0, -1.5, 1.0, 1.2],
                          cellColours=colors)
         for (row, col), cell in tbl.get_celld().items():
             if row == 0:
-                cell.set_text_props(fontproperties=FontProperties(weight='bold', size=7))
+                cell.set_text_props(fontproperties=FontProperties(weight='bold', size=25))
             cell.set_height(cell.get_height() * 1.5)
         tbl.auto_set_font_size(True)
 
@@ -92,8 +99,18 @@ class PlotBaseMgr:
             if buoyPressure is not None:
                 buoyPressure = round(buoyPressure, 2)
 
+            actualdepth = round(buoyPressure - 10.13, 2) if buoyPressure is not None else None
+
+            actualctdvalue = self._getCTDDepthandValue(actualdepth, ctdFilteredDepths, ctdFilteredData)
+
             lTableList.append(
-                [depth, buoyDepthReading, buoyPressure, ctdvalue, self._getDiff(buoyDepthReading, ctdvalue, diffFn)])
+                [depth,
+                 buoyDepthReading,
+                 buoyPressure,
+                 actualdepth,
+                 actualctdvalue,
+                 ctdvalue,
+                 self._getDiff(buoyDepthReading, ctdvalue, diffFn)])
         # Now inverse the table data for the chart
         tableList = sorted(lTableList, key=self._by_depth)
         return tableList  # , depthList

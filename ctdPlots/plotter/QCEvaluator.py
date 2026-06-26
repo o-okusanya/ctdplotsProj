@@ -23,20 +23,20 @@ class QCEvaluator:
         flags = []
         colors = []
         for row in tableList:
-            difference = row[4]  #4th column is the difference
+            difference = row[6]  #5th column is the difference
             flags.append(self.evaluateDifference(difference))
         #Evaluating the colors
         for i in range(len(tableList)):
             if flags[i] == 4:
                 # outside suspect range failed
-                colors.append(["white", "white", "white", "red"])
+                colors.append(["white", "white", "white", "white", "white", "red"])
                 axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
             elif flags[i] == 3:
                 # inside suspect range
-                colors.append(["white", "white", "white", "orange"])
+                colors.append(["white", "white", "white", "white", "white", "orange"])
                 axis.axhline(tableList[i][0], color='red', lw=0.25)  # y = 0
             else:
                 # either none or the ranges
-                colors.append(["white", "white", "white", "white"])
+                colors.append(["white", "white", "white", "white", "white", "white"])
                 axis.axhline(tableList[i][0], color='black', lw=0.25)  # y = 0
         return colors
