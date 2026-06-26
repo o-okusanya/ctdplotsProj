@@ -48,7 +48,7 @@ class PlotConductivityMgr(PlotBaseMgr):
             ctdFilteredData, ctdFilteredDepths = self._getThePlotData(ctdData, apiDataVo.getUniqueDepths(),
                                                                       self.DATA_INDEX)
             tableList = self._getDataDepthLists(apiDataVo.depthArray, apiDataVo.dataArray, apiDataVo.pressArray,
-                                                ctdFilteredDepths, ctdFilteredData, self._percentDifference)  # DIFFERENT
+                                                ctdFilteredDepths, ctdFilteredData, self._valueDifference)  # DIFFERENT
             colors = self.qc.evaluateList(axis, tableList)
             self._buildDualTable(axis, tableList, colors, self.tableDesc)
 
